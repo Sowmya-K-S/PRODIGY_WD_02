@@ -66,12 +66,12 @@ function setMode(mode) {
 
   //function to change time
 
-  let interval1, interval2, interval3
+  let interval0, interval1, interval2, interval3
   let start_button = document.querySelector(".start")
   let second = document.querySelector('.second')
   let minute = document.querySelector('.minute')
   let hour = document.querySelector('.hour')
-  let millisecond = document.querySelector('millisecond')
+  let millisecond = document.querySelector('.millisecond')
 
 
   function changeTime()
@@ -85,16 +85,32 @@ function setMode(mode) {
 
     //changing time
 
+    //changing milliseconds
+    interval0 = setInterval(() => {
+      if(Number(millisecond.innerText)<9)
+        millisecond.innerText = "0" +  String(Number(millisecond.innerText)+1)
+      else
+        millisecond.innerText = String(Number(millisecond.innerText)+1)
+    }, 100)
+
+
+    //changing seconds
+
      interval1 = setInterval(() => {
+
+        millisecond.innerText = "00"
+
         if(Number(second.innerText)<9)
             second.innerText = "0" + String(Number(second.innerText)+1)
         else
             second.innerText = String(Number(second.innerText)+1)
      },1000)
 
-
+    
+     //change minutes
      interval2 = setInterval(() => {
 
+            millisecond.innerText = "00"
             second.innerText = "00"
             
             if(Number(minute.innerText)<9)
@@ -104,6 +120,8 @@ function setMode(mode) {
 
      },60000)
 
+
+     //changes hours
      interval3 = setInterval(() => {
 
         second.innerText = "00"
@@ -114,8 +132,7 @@ function setMode(mode) {
         else
             hour.innerText = String(Number(hour.innerText)+1)
 
- },360000)
-
+      },360000)
 
 }
 
@@ -126,6 +143,7 @@ function stopChangeTime()
     start_button.classList.add('start')
     start_button.innerText = 'Start'
     
+    clearInterval(interval0)
     clearInterval(interval1)
     clearInterval(interval2)
     clearInterval(interval3)
@@ -147,6 +165,7 @@ let split_button = document.querySelector('.split')
 function splitTime()
 {
   //extract the time
+
   //create a element and throw it on to front end
 }
 
@@ -161,6 +180,8 @@ function restTime()
   // to bring the button and time to initial state
 
   //clearing intervals
+  clearInterval(interval0)
+  clearInterval(interval1)
   clearInterval(interval1)
   clearInterval(interval2)
   clearInterval(interval3)

@@ -64,20 +64,15 @@ body
     align-items: center;
     justify-content: center;
     gap:20px;
-    font-size: 50px;
+    font-size: 40px;
     padding: 20px;
-    width:25%;
+    min-width:49%;
     border: solid white 2px;
 }
 
-.millisecond .second .minute .hour
+.millisecond, .second, .minute, .hour, .seperator
 {
-    width:20%;
-}
-
-.seperator
-{
-    width:7%;
+    min-width:7%;
 }
 
 .buttons
