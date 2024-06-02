@@ -61,7 +61,9 @@ function setMode(mode) {
   
   // Apply mode on page load
   applyMode();
+
   
+//*********************************************************************************************************************
 
 
   //function to change time
@@ -76,11 +78,15 @@ function setMode(mode) {
 
   function changeTime()
   {
-
     //changing button text and class
     start_button.classList.remove('start')
     start_button.classList.add('stop')
     start_button.innerText = 'Stop'
+
+
+    //making split/lap button visible
+    let split_Button = document.querySelector(".split")
+    split_Button.style.display = "inline-block"
 
 
     //changing time
@@ -91,7 +97,7 @@ function setMode(mode) {
         millisecond.innerText = "0" +  String(Number(millisecond.innerText)+1)
       else
         millisecond.innerText = String(Number(millisecond.innerText)+1)
-    }, 100)
+    }, 10)
 
 
     //changing seconds
@@ -143,10 +149,15 @@ function stopChangeTime()
     start_button.classList.add('start')
     start_button.innerText = 'Start'
     
+    //clearing all the intervals
     clearInterval(interval0)
     clearInterval(interval1)
     clearInterval(interval2)
     clearInterval(interval3)
+
+    //making split/lap button invisible
+    let split_Button = document.querySelector(".split")
+    split_Button.style.display = "none"
 }
 
 
@@ -160,16 +171,85 @@ start_button.addEventListener('click', function() {
 });
 
 
+
 //function to split
 let split_button = document.querySelector('.split')
+
+//initialise the variables to store time values of prev split
+let prev_millisecond = 0;
+let prev_second = 0;
+let prev_minute = 0;
+let prev_hour = 0;
+
 function splitTime()
 {
   //extract the time
+  let display_millisecond = millisecond.innerText
+  let display_second = second.innerText
+  let display_minute = minute.innerText
+  let display_hour = hour.innerText
+  let lap_milisecond
+  let lap_second
+  let lap_minute
+  let lap_hour
 
-  //create a element and throw it on to front end
+  //create 2 elements and throw it to the front end
+  let split_time = document.createElement('div')
+  split_time.innerHTML = `<span>${display_hour} : ${display_minute} : ${display_second} : ${display_millisecond}</span>`
+
+  let lap_time = document.createElement('div')
+
+
+  if(Math.abs(Number(display_hour)-prev_hour)<9)
+    lap_hour = "0"+Math.abs(Number(display_hour)-prev_hour)
+  else
+    lap_hour = Math.abs(Number(display_hour)-prev_hour)
+
+
+  if(Math.abs(Number(display_minute)-prev_minute)<9)
+    lap_minute = "0"+Math.abs(Number(display_minute)-prev_minute)
+  else
+    lap_minute = Math.abs(Number(display_minute)-prev_minute)
+
+
+  if(Math.abs(Number(display_second)-prev_second)<9)
+    lap_second = "0"+Math.abs(Number(display_second)-prev_second)
+  else
+    lap_second = Math.abs(Number(display_second)-prev_second)
+
+
+  if(Math.abs(Number(display_millisecond)-prev_millisecond)<9)
+    lap_milisecond = "0"+Math.abs(Number(display_millisecond)-prev_millisecond)
+  else
+    lap_milisecond = Math.abs(Number(display_millisecond)-prev_millisecond)
+
+  lap_time.innerHTML = `<span>${lap_hour} : ${lap_minute} : ${lap_second} : ${lap_milisecond}</span>`
+
+  //extract the main div of split and lap
+  let main_lap_split = document.querySelector(".lap-split-times")
+
+  //setting its display value
+  main_lap_split.style.display = "flex"
+
+  //extract parent element
+  let parent_split_time_div = document.querySelector('.split-time')
+  let parent_lap_time_div = document.querySelector('.lap-time')
+
+  //append the child element
+  parent_split_time_div.appendChild(split_time)
+  parent_lap_time_div.appendChild(lap_time)
+
+  //update values of prev variables
+  prev_millisecond = Number(display_millisecond);
+  prev_second = Number(display_second);
+  prev_minute = Number(display_minute);
+  prev_hour = Number(display_hour);
+
+    
 }
 
 split_button.addEventListener('click',splitTime)
+
 
 
 //function to reset
@@ -196,6 +276,29 @@ function restTime()
   minute.innerText = '00'
   hour.innerText = '00'
   millisecond.innerText = '00'
+
+  //extract the main div of split and lap
+  let main_lap_split = document.querySelector(".lap-split-times")
+
+  //setting its display value
+  main_lap_split.style.display = "none"
+
+  //extract parent element
+  let parent_split_time_div = document.querySelector('.right-part')
+  let parent_lap_time_div = document.querySelector('.left-part')
+
+  //clearing all the lap and split times and keeping only the headings
+  parent_split_time_div.innerHTML = `<h3>Split Time</h3> <div class="split-time"></div>`
+  parent_lap_time_div.innerHTML =  `<h3>Lap Time</h3><div class="lap-time"></div>`
+
+  //making split/lap button invisible
+  let split_Button = document.querySelector(".split")
+  split_Button.style.display = "none"
+
+  prev_millisecond = 0;
+  prev_second = 0;
+  prev_minute = 0;
+  prev_hour = 0;
 }
 
 reset_button.addEventListener('click',restTime)

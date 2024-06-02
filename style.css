@@ -24,16 +24,10 @@ body
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    gap:50px;
-    font-size: 50px;
-}
-
-.heading
-{
-    margin-top: 100px;
-    font-weight: 600;
+    height: 100%;
+    width: 100%;
+    gap:25px;
+    margin-top: 70px;
 }
 
 /* mode changer button */
@@ -53,9 +47,19 @@ body
     justify-content: center;
     align-items: center;
     border-radius: 50%; 
+    
 }
 
 /* mode changer button */
+
+
+/* timer section */
+
+.heading
+{
+    font-weight: 700;
+    font-size: 50px;
+}
 
 .time
 {
@@ -64,16 +68,21 @@ body
     align-items: center;
     justify-content: center;
     gap:20px;
-    font-size: 40px;
+    font-size: 25px;
     padding: 20px;
-    min-width:49%;
-    border: solid white 2px;
+    font-weight: 500;
+    min-width: 280px;
 }
 
 .millisecond, .second, .minute, .hour, .seperator
 {
-    min-width:7%;
+    min-width: 40px;
 }
+
+/* timer section */
+
+
+/* buttons */
 
 .buttons
 {
@@ -88,12 +97,14 @@ button
     height:40px;
     color:var(--primary-font-color);
     font-weight: 600;
+    font-family: 'Poppins';
     border:none;
     border-radius: 10px;
     transition:transform 0.1s ease;
+    font-family: 'poppins';
 }
 
-button:hover
+button:active
 {
     transform: scale(1.1);
 }
@@ -103,7 +114,7 @@ button:hover
     background-color:var(--primary-b1);
 }
 
-.stop 
+.stop
 {
     background-color:var(--primary-b1);
 }
@@ -111,9 +122,80 @@ button:hover
 .split
 {
     background-color:var(--primary-b2);
+    display: none ;
 }
 
 .reset
 {
     background-color:var(--primary-b3) ;
+    
 }
+
+/* buttons */
+
+
+
+/* lap and split times */
+
+.lap-split-times
+{
+    font-size: 15px;
+    display: none;
+    align-items: center;
+    gap:100px;    
+}
+
+.right-part, .left-part
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+
+}
+
+.split-time, .lap-time
+{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* lap and split times */
+
+
+
+/* Media query */
+
+@media(max-width:426px) 
+{
+    .heading
+    {
+        font-weight: 700;
+        font-size: 35px;
+    }
+    .time
+    {
+        font-size: 20px;
+        min-width: 210px;
+    }
+
+    .millisecond, .second, .minute, .hour, .seperator
+    {
+        min-width: 25px;
+    }
+
+    .buttons
+    {
+        gap:10px;
+    }
+
+    button
+    {
+        width:80px;
+        height:40px;
+    }
+}
+
+/* Media query */
